@@ -1,4 +1,4 @@
-package Projects.www.www.src.test.java.com.kbs.www;
+package com.kbs.www;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

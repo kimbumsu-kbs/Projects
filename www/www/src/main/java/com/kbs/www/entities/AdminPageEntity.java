@@ -1,4 +1,4 @@
-package Projects.www.www.src.main.java.com.kbs.www.entities;
+package com.kbs.www.entities;
 
 import lombok.Getter;
 import lombok.Setter;

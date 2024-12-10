@@ -1,6 +1,6 @@
-package Projects.www.www.src.main.java.com.kbs.www.controllers;
+package com.kbs.www.controllers;
 
-import Projects.www.www.src.main.java.com.kbs.www.entities.AdminPageEntity;
+import com.kbs.www.entities.AdminPageEntity;
 import com.kbs.www.entities.UserEntity;
 import com.kbs.www.services.AdminPageService;
 import org.json.JSONObject;

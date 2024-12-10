@@ -1,4 +1,4 @@
-package Projects.www.www.src.main.java.com.kbs.www;
+package com.kbs.www;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

@@ -1,8 +1,8 @@
-package Projects.www.www.src.main.java.com.kbs.www.services;
+package com.kbs.www.services;
 
-import Projects.www.www.src.main.java.com.kbs.www.entities.AdminPageEntity;
+import com.kbs.www.entities.AdminPageEntity;
 import com.kbs.www.entities.UserEntity;
-import Projects.www.www.src.main.java.com.kbs.www.mappers.AdminPageMapper;
+import com.kbs.www.mappers.AdminPageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
