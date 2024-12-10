@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Projects.www.www.src.main.java.com.kbs.www.mappers.AdminPageMapper">
+
+    <insert id="insertAdminWrite" parameterType="Projects.www.www.src.main.java.com.kbs.www.entities.AdminPageEntity">
+        INSERT INTO `fave`.`festival_info` (`title`, `description`, `start_date`, `end_date`, `location`,
+                                            `user_email`, `cover_data`, `cover_content_type`, `create_at`, `update_at`)
+        VALUES (#{title}, #{description}, #{startDate}, #{endDate}, #{location}, #{userEmail}, #{coverData},
+                #{coverContentType}, #{createdAt}, #{updatedAt});
+    </insert>
+    <select id="selectAllUser" parameterType="com.kbs.www.entities.UserEntity" resultType="com.kbs.www.entities.UserEntity">
+        SELECT `email`        AS `email`,
+               `password`     AS `password`,
+               `nickname`     AS `nickName`,
+               `contact`      AS `contact`,
+               `create_at`    AS `createdAt`,
+               `update_at`    AS `updatedAt`,
+               `deleted_at`   AS `deletedAt`,
+               `is_admin`     AS `isAdmin`,
+               `is_suspended` AS `isSuspended`,
+               `is_verified`  AS `isVerified`,
+               `warning`      AS `warning`
+        FROM `fave`.`users`
+        WHERE `deleted_at` IS NULL
+    </select>
+
+</mapper>
