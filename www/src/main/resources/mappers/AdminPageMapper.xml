@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kbs.www.mappers.AdminPageMapper">
+
+    <!--  축제 정보 등록  -->
+    <insert id="insertAdminWrite" parameterType="com.kbs.www.entities.AdminPageEntity">
+        INSERT INTO `fave`.`festival_info` (`title`, `description`, `start_date`, `end_date`, `location`,
+                                            `user_email`, `cover_data`, `cover_content_type`, `create_at`, `update_at`)
+        VALUES (#{title}, #{description}, #{startDate}, #{endDate}, #{location}, #{userEmail}, #{coverData},
+                #{coverContentType}, #{createdAt}, #{updatedAt});
+    </insert>
+    <!--  user 테이블에 있는 데이터 불러오기 -->
+    <select id="selectAllUser" parameterType="com.kbs.www.entities.UserEntity"
+            resultType="com.kbs.www.entities.UserEntity">
+        SELECT `email`        AS `email`,
+               `password`     AS `password`,
+               `nickname`     AS `nickName`,
+               `contact`      AS `contact`,
+               `create_at`    AS `createdAt`,
+               `update_at`    AS `updatedAt`,
+               `deleted_at`   AS `deletedAt`,
+               `is_admin`     AS `isAdmin`,
+               `is_suspended` AS `isSuspended`,
+               `is_verified`  AS `isVerified`,
+               `warning`      AS `warning`
+        FROM `fave`.`users`
+        WHERE `deleted_at` IS NULL
+        ORDER BY `create_at` DESC
+    </select>
+    <!-- userEmail 이 동일한 데이터 불러오기 -->
+    <!-- 경고 횟수 , 탈퇴 처리 업데이트 랑 연결-->
+    <select id="selectUserByEmail" resultType="com.kbs.www.entities.UserEntity">
+        SELECT `email`        AS `email`,
+               `password`     AS `password`,
+               `nickname`     AS `nickName`,
+               `contact`      AS `contact`,
+               `create_at`    AS `createdAt`,
+               `update_at`    AS `updatedAt`,
+               `deleted_at`   AS `deletedAt`,
+               `is_admin`     AS `isAdmin`,
+               `is_suspended` AS `isSuspended`,
+               `is_verified`  AS `isVerified`,
+               `warning`      AS `warning`
+        FROM `fave`.`users`
+        WHERE `email` = #{userEmail}
+    </select>
+    <!--  경고 횟수 업데이트 , 이메일 탈퇴 처리  -->
+    <update id="updateWarning" parameterType="com.kbs.www.entities.UserEntity">
+        UPDATE `fave`.`users`
+        SET `deleted_at` = #{deletedAt},
+            `is_suspended` = #{isSuspended},
+            `warning`    = #{warning}
+        WHERE `email` = #{email}
+    </update>
+<!--  user 테이블 의 정보 개수  -->
+    <select id="selectUserCount" resultType="java.lang.Integer">
+        SELECT COUNT(0)
+        FROM `fave`.`users`
+    </select>
+<!--    회원 관리 페이지 페이징  -->
+    <select id="selectUserPage">
+        SELECT `email`        AS `email`,
+               `password`     AS `password`,
+               `nickname`     AS `nickName`,
+               `contact`      AS `contact`,
+               `create_at`    AS `createdAt`,
+               `update_at`    AS `updatedAt`,
+               `deleted_at`   AS `deletedAt`,
+               `is_admin`     AS `isAdmin`,
+               `is_suspended` AS `isSuspended`,
+               `is_verified`  AS `isVerified`,
+               `warning`      AS `warning`
+        FROM `fave`.`users`
+        WHERE `deleted_at` IS NULL
+        ORDER BY `create_at` DESC
+        LIMIT #{limitCount} OFFSET #{offsetCount}
+    </select>
+    <select id="selectUserCountBySearch" resultType="java.lang.Integer">
+        SELECT COUNT(0)
+        FROM `fave`.`users`
+        <if test="filter.equals('email')">
+            WHERE `email` LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="filter.equals('nickname')">
+            WHERE `nickname` LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="filter.equals('contact')">
+            WHERE `contact` LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="filter.equals('verified')">
+            WHERE `is_verified` = #{keyword}
+        </if>
+    </select>
+    <select id="selectUserBySearch" resultType="com.kbs.www.entities.UserEntity" parameterType="com.kbs.www.entities.UserEntity">
+        SELECT `email`        AS `email`,
+               `password`     AS `password`,
+               `nickname`     AS `nickName`,
+               `contact`      AS `contact`,
+               `create_at`    AS `createdAt`,
+               `update_at`    AS `updatedAt`,
+               `deleted_at`   AS `deletedAt`,
+               `is_admin`     AS `isAdmin`,
+               `is_suspended` AS `isSuspended`,
+               `is_verified`  AS `isVerified`,
+               `warning`      AS `warning`
+        FROM `fave`.`users`
+        WHERE `deleted_at` IS NULL
+        <if test="filter.equals('email')">
+            AND `email` LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="filter.equals('nickname')">
+            AND `nickname` LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="filter.equals('contact')">
+            AND `contact` LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="filter.equals('verified')">
+            AND `is_verified` = #{keyword}
+        </if>
+        ORDER BY `create_at` DESC
+        LIMIT #{limitCount} OFFSET #{offsetCount}
+    </select>
+    <select id="selectBoardPostCount" resultType="java.lang.Integer">
+        SELECT COUNT(0)
+        FROM `fave`.`board_posts`
+    </select>
+    <select id="selectBoardPost" resultType="com.kbs.www.entities.BoardPostsEntity" parameterType="com.kbs.www.entities.BoardPostsEntity">
+        SELECT `index`         AS `index`,
+               `title`         AS `title`,
+               `content`       AS `content`,
+               `user_email`    AS `userEmail`,
+               `user_nickname` AS `userNickName`,
+               `create_at`     AS `createdAt`,
+               `update_at`     AS `updatedAt`,
+               `deleted_at`    AS `deletedAt`,
+               `view`          AS `view`
+        FROM `fave`.`board_posts`
+        WHERE `deleted_at` IS NULL
+        LIMIT #{limitCount} OFFSET #{offsetCount}
+    </select>
+    <select id="selectBoardPostCountBySearch" resultType="java.lang.Integer">
+        SELECT COUNT(0)
+        FROM `fave`.`board_posts`
+        <if test="filter.equals('all')">
+            WHERE `title` LIKE CONCAT('%', #{keyword}, '%') OR `content` LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="filter.equals('title')">
+            WHERE `title` LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="filter.equals('content')">
+            WHERE `content` LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="filter.equals('nickname')">
+            WHERE `user_nickname` LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+    </select>
+    <select id="selectBoardPostBySearch" resultType="com.kbs.www.entities.BoardPostsEntity" parameterType="com.kbs.www.entities.BoardPostsEntity">
+        SELECT `index`         AS `index`,
+               `title`         AS `title`,
+               `content`       AS `content`,
+               `user_email`    AS `userEmail`,
+               `user_nickname` AS `userNickName`,
+               `create_at`     AS `createdAt`,
+               `update_at`     AS `updatedAt`,
+               `deleted_at`    AS `deletedAt`,
+               `view`          AS `view`
+        FROM `fave`.`board_posts`
+        WHERE `deleted_at` IS NULL
+        <if test="filter.equals('all')">
+            AND `title` LIKE CONCAT('%', #{keyword}, '%') OR `content` LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="filter.equals('title')">
+            AND `title` LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="filter.equals('content')">
+            AND `content` LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        <if test="filter.equals('nickname')">
+            AND `user_nickname` LIKE CONCAT('%', #{keyword}, '%')
+        </if>
+        ORDER BY `index` DESC
+        LIMIT #{limitCount} OFFSET #{offsetCount}
+    </select>
+
+
+</mapper>
