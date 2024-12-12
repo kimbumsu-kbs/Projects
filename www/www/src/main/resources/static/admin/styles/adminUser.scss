@@ -21,15 +21,63 @@
     margin: 0 auto;
     table-layout: fixed;
     border-collapse: separate;
+    font-size: 0.825rem;
+
+    .main-container {
+      background-color: #f5f5ec;
+    }
 
     td, th {
       text-align: center;
       padding: 0.825rem;
     }
 
-    // user-container에만 밑줄 추가
     tr.user-container {
-      border-bottom: 1px solid #a6a6a6; // 밑줄 스타일
+      td {
+        border-bottom: 1px solid #a6a6a6;
+      }
+    }
+
+    .page-container {
+      td {
+        a {
+          margin-right: 0.5rem;
+        }
+
+        a:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  > .main-form {
+    display: flex;
+    gap: 0.5rem;
+
+    > .label {
+
+      > .filter {
+        $border-color: #c1b5a3;
+        border: 0.08rem solid $border-color;
+        border-radius: 0.25rem;
+
+        &:focus {
+          border: 0.08rem solid darken($border-color, 10%);
+          outline: none;
+        }
+      }
+
+      > .keyword {
+        $border-color: #c1b5a3;
+        border: 0.08rem solid $border-color;
+        border-radius: 0.25rem;
+
+        &:focus {
+          border: 0.08rem solid darken($border-color, 10%);
+          outline: none;
+        }
+      }
     }
   }
 }

@@ -18,8 +18,9 @@
     <script defer src="/admin/scripts/write.js"></script>
     <style>
         .ck-editor__editable {
+            width: 40rem;
+            height: auto;
             min-height: 36rem;
-            max-height: 36rem;
             overflow: auto;
         }
     </style>
@@ -110,9 +111,9 @@
         <div class="line"></div>
         <div class="main-container">
             <label class="label">
-                <input type="hidden" class="content" name="description" maxlength="10000" minlength="0">
-                <button type="submit" class="button">축제 등록</button>
+                <textarea hidden="hidden" class="content" name="description" maxlength="10000" minlength="0"></textarea>
             </label>
+            <button type="submit" class="button">축제 등록</button>
         </div>
     </form>
 </main>

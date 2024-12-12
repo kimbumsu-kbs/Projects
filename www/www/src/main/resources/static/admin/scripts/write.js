@@ -84,7 +84,7 @@ const editorConfig = {
         Bold,
         CloudServices,
         Essentials,
-        Heading,
+        // Heading,
         ImageBlock,
         ImageCaption,
         ImageInline,

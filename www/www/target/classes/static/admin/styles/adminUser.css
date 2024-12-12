@@ -20,13 +20,43 @@
   margin: 0 auto;
   table-layout: fixed;
   border-collapse: separate;
+  font-size: 0.825rem;
+}
+#main .table .main-container {
+  background-color: #f5f5ec;
 }
 #main .table td, #main .table th {
   text-align: center;
   padding: 0.825rem;
 }
-#main .table tr.user-container {
+#main .table tr.user-container td {
   border-bottom: 1px solid #a6a6a6;
+}
+#main .table .page-container td a {
+  margin-right: 0.5rem;
+}
+#main .table .page-container td a:last-child {
+  margin-right: 0;
+}
+#main > .main-form {
+  display: flex;
+  gap: 0.5rem;
+}
+#main > .main-form > .label > .filter {
+  border: 0.08rem solid #c1b5a3;
+  border-radius: 0.25rem;
+}
+#main > .main-form > .label > .filter:focus {
+  border: 0.08rem solid rgb(172.4675324675, 156.4935064935, 132.5324675325);
+  outline: none;
+}
+#main > .main-form > .label > .keyword {
+  border: 0.08rem solid #c1b5a3;
+  border-radius: 0.25rem;
+}
+#main > .main-form > .label > .keyword:focus {
+  border: 0.08rem solid rgb(172.4675324675, 156.4935064935, 132.5324675325);
+  outline: none;
 }
 
 /*# sourceMappingURL=adminUser.css.map */
